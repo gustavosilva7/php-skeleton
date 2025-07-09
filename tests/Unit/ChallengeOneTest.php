@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\ChallengeOne;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ChallengeOneTest extends TestCase
@@ -14,31 +15,19 @@ class ChallengeOneTest extends TestCase
         $this->challengeOne = new ChallengeOne();
     }
 
-    public function testCalcWithValueDivisibleByThree(): void
+    public static function calcCases(): array
     {
-        $result = $this->challengeOne->calc(3);
-
-        $this->assertEquals("Gustavo", $result);
+        return [
+            'Divisível por 3' => [3, "Gustavo"],
+            'Divisível por 5' => [10, "Alexandre"],
+            'Divisível por 3 e 5' => [15, "Gustavo Alexandre"],
+            'Não divisível por 3 e 5' => [4, "4"],
+        ];
     }
 
-    public function testCalcWithValueDivisibleByFive(): void
+    #[DataProvider('calcCases')]
+    public function testCalc(int $input, string $expected): void
     {
-        $result = $this->challengeOne->calc(10);
-
-        $this->assertEquals("Alexandre", $result);
-    }
-
-    public function testCalcWithValueDivisibleByThreeAndFive(): void
-    {
-        $result = $this->challengeOne->calc(15);
-
-        $this->assertEquals("Gustavo Alexandre", $result);
-    }
-
-    public function testCalcWithValueNotDivisibleByThreeAndFive(): void
-    {
-        $result = $this->challengeOne->calc(4);
-
-        $this->assertEquals("4", $result);
+        $this->assertSame($expected, $this->challengeOne->calc($input));
     }
 }

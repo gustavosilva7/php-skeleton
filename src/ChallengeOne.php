@@ -6,18 +6,20 @@ namespace App;
 
 class ChallengeOne
 {
-    public function calc(int $value = 0): string
+    public function calc(int $value): string
     {
-        if ($value % 3 === 0 && $value % 5 !== 0) {
-            return "Gustavo";
-        } elseif ($value % 5 === 0 && $value % 3 !== 0) {
-            return "Alexandre";
-        } elseif ($value % 3 === 0 && $value % 5 === 0) {
-            return "Gustavo Alexandre";
+        $result = '';
+
+        if ($value % 3 === 0 && $value % 5 === 0) {
+            $result = 'Gustavo Alexandre';
+        } elseif ($value % 3 === 0) {
+            $result = 'Gustavo';
+        } elseif ($value % 5 === 0) {
+            $result = 'Alexandre';
         } else {
-            return (string) $value;
+            $result = (string) $value;
         }
 
-        return '';
+        return $result;
     }
 }
