@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\ChallengeTwo;
+use App\Challengers\ChallengeTwo;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
