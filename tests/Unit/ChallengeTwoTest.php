@@ -15,86 +15,18 @@ class ChallengeTwoTest extends TestCase
         $this->challengeTwo = new ChallengeTwo();
     }
 
-    public static function calcCases(): array
-    {
-        return [
-            'Divisível por 3' => [
-                3,
-                [
-                    [
-                        'divisor' => 3,
-                        'name' => 'Gustavo'
-                    ]
-                ],
-                'Gustavo'
-            ],
-
-            'Divisível por 5' => [
-                10,
-                [
-                    [
-                        'divisor' => 5,
-                        'name' => 'Alexandre'
-                    ]
-                ],
-                'Alexandre'
-            ],
-
-            'Divisível por 3 e 5' => [
-                15,
-                [
-                    [
-                        'divisor' => 3,
-                        'name' => 'Gustavo'
-                    ],
-                    [
-                        'divisor' => 5,
-                        'name' => 'Alexandre'
-                    ]
-                ],
-                'Gustavo Alexandre'
-            ],
-
-            'Não divisível por 3 e 5' => [
-                4,
-                [
-                    [
-                        'divisor' => 3,
-                        'name' => 'Gustavo'
-                    ],
-                    [
-                        'divisor' => 5,
-                        'name' => 'Alexandre'
-                    ]
-                ],
-                '4'
-            ],
-        ];
-    }
-
     #[DataProvider('calcCases')]
-    public function testCalc(int $input, array $cases, string $expected): void
+    public function testCalc(int $input, string $expected): void
     {
-        $this->assertSame($expected, $this->challengeTwo->calc($input, $cases));
+        $this->assertSame($expected, $this->challengeTwo->calc($input));
     }
 
-    #[DataProvider('calcCasesWithSevenValue')]
-    public function testCalcWithSevenValue(int $input, array $cases, string $expected): void
+    public static function calcCases(): iterable
     {
-        $this->assertSame($expected, $this->challengeTwo->calc($input, $cases));
-    }
-
-    public static function calcCasesWithSevenValue(): iterable
-    {
-        yield 'Divisível por 7' => [
-            21,
-            [
-                [
-                    'divisor' => 7,
-                    'name' => 'Silva'
-                ]
-            ],
-            "Silva"
-        ];
+        yield 'Divisível por 3' => [3, 'Gustavo'];
+        yield 'Divisível por 5' => [10, 'Alexandre'];
+        yield 'Divisível por 3 e 5' => [15, 'Gustavo Alexandre'];
+        yield 'Não divisível por 3 e 5' => [4, '4'];
+        yield 'Divisível por 7' => [21, 'Silva'];
     }
 }

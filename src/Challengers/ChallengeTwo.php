@@ -4,22 +4,32 @@ declare(strict_types=1);
 
 namespace App\Challengers;
 
+use App\Interfaces\CalcThreeAndFive;
+use App\Interfaces\CalcThree;
+use App\Interfaces\CalcFive;
+use App\Interfaces\CalcSeven;
+
 class ChallengeTwo
 {
-    public function calc(int $value, array $cases): string
+    public function calc(int $value): string
     {
         $result = '';
 
-        foreach ($cases as $case) {
-            if ($value % $case['divisor'] === 0) {
-                $result .= $case['name'] . ' ';
+        $calculators = [
+            new CalcThreeAndFive(),
+            new CalcSeven(),
+            new CalcFive(),
+            new CalcThree(),
+        ];
+
+        foreach ($calculators as $calculator) {
+            if ($calculator->isMultiple($value)) {
+                $result = $calculator->getMessage();
+
+                break;
             }
         }
 
-        if ($result === '') {
-            return (string) $value;
-        }
-
-        return trim($result);
+        return $result ?: (string) $value;
     }
 }
