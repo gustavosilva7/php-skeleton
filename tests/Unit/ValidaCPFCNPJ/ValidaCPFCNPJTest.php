@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-include(__DIR__ . '/../../../src/Challengers/ValidateCPFCNPJ/class/class-valida-cpf-cnpj.php');
-
+use App\Challengers\ValidateCPFCNPJ\ValidaCPFCNPJ;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
