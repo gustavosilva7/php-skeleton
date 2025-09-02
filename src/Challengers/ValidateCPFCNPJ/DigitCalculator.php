@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Challengers\ValidateCPFCNPJ;
 
-use App\Interfaces\Contracts\DigitCalculatorInterface;
-
-class DigitCalculator implements DigitCalculatorInterface
+class DigitCalculator
 {
     public function calculateDigits(string $digits, int $positions = 10, int $sumDigits = 0): string
     {

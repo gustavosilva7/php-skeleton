@@ -4,40 +4,27 @@ declare(strict_types=1);
 
 namespace App\Challengers\ValidateCPFCNPJ;
 
-use App\Interfaces\Contracts\DocumentValidatorInterface;
-use App\Interfaces\Contracts\CpfValidatorInterface;
-use App\Interfaces\Contracts\CnpjValidatorInterface;
-use App\Interfaces\Contracts\DigitCalculatorInterface;
-use App\Interfaces\Contracts\DocumentTypeDetectorInterface;
+use App\Interfaces\Contracts\DocumentInterface;
 
-class ValidaCPFCNPJ implements DocumentValidatorInterface, CpfValidatorInterface, CnpjValidatorInterface
+class ValidaCPFCNPJ implements DocumentInterface
 {
     private string $value;
-    private DigitCalculatorInterface $digitCalculator;
-    private DocumentTypeDetectorInterface $typeDetector;
+    private DigitCalculator $digitCalculator;
+    private DocumentTypeDetector $typeDetector;
 
-    public function __construct(
-        string $value = '',
-        ?DigitCalculatorInterface $digitCalculator = null,
-        ?DocumentTypeDetectorInterface $typeDetector = null
-    ) {
+    public function __construct(string $value = '')
+    {
         $this->value = $this->sanitizeValue($value);
-        $this->digitCalculator = $digitCalculator ?? new DigitCalculator();
-        $this->typeDetector = $typeDetector ?? new DocumentTypeDetector();
+        $this->digitCalculator = new DigitCalculator();
+        $this->typeDetector = new DocumentTypeDetector();
     }
 
-    public function getValue(): string
+    public function isValid(string $document = ''): bool
     {
-        return $this->value;
-    }
+        if (!empty($document)) {
+            $this->value = $this->sanitizeValue($document);
+        }
 
-    public function validate(): bool
-    {
-        return $this->isValid();
-    }
-
-    public function isValid(): bool
-    {
         $type = $this->typeDetector->detectType($this->value);
 
         return match ($type) {
@@ -47,8 +34,12 @@ class ValidaCPFCNPJ implements DocumentValidatorInterface, CpfValidatorInterface
         };
     }
 
-    public function format(): string|false
+    public function format(string $document = ''): string|false
     {
+        if (!empty($document)) {
+            $this->value = $this->sanitizeValue($document);
+        }
+
         $type = $this->typeDetector->detectType($this->value);
 
         return match ($type) {
@@ -131,13 +122,13 @@ class ValidaCPFCNPJ implements DocumentValidatorInterface, CpfValidatorInterface
         return true;
     }
 
-    public function valida(): bool
+    public function valida(string $document = ''): bool
     {
-        return $this->validate();
+        return $this->isValid($document);
     }
 
-    public function formata(): string|false
+    public function formata(string $document = ''): string|false
     {
-        return $this->format();
+        return $this->format($document);
     }
 }

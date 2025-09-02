@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Challengers\ValidateCPFCNPJ;
 
-use App\Interfaces\Contracts\DocumentTypeDetectorInterface;
-
-class DocumentTypeDetector implements DocumentTypeDetectorInterface
+class DocumentTypeDetector
 {
     public function detectType(string $value): string|false
     {
